@@ -2,6 +2,7 @@ package com.experis.course.springilmiofotoalbum.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -28,7 +29,7 @@ public class Photo {
   @Size(max = 255, message = "Lenght must be less than 255")
   private String url;
 
-  @NotBlank(message = "Visibility must not be blank")
+  @NotNull
   private Boolean visibility;
 
   @CreationTimestamp

@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Create Photo')"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar('photos')"></nav>
+<div class="container">
+  <h1>Create Photo</h1>
+  <hr>
+  <form
+      id="photo-create"
+      method="POST"
+      th:action="@/"
+  >
+
+  </form>
+</div>
+</body>
+</html>

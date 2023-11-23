@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head th:insert="fragments/resources :: headResources('Photo List')"></head>
 <body>
 
@@ -29,6 +29,7 @@
       <th>Title</th>
       <th>Url</th>
       <th>Description</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
@@ -36,6 +37,28 @@
       <td class="pt-5" th:text="*{title}"></td>
       <td><img style="height: 100px; width: 150px;" th:src="*{url}"></td>
       <td class="pt-5" th:text="*{description}"></td>
+      <td class="d-flex justify-content-between" style="height: 117px; margin-bottom: -1px">
+        <a class="btn btn-primary" style="height:39px; margin-top: 32px;" th:href="@{/photos/show/{id}(id=*{id})}"
+           title="details"><i
+            class="fa-solid fa-book"></i></a>
+        <a
+            class="btn btn-primary"
+            style="height:39px; margin-top: 32px;"
+            th:href="@{/photos/edit/{id}(id=*{id})}"
+            title="edit"
+            sec:authorize="hasAuthority('ADMIN')"
+        ><i
+            class="fa-solid fa-pen-to-square"></i></a>
+        <form
+            th:action="@{/photos/delete/{id}(id=*{id})}"
+            onsubmit="return confirm('Are you sure?')"
+            sec:authorize="hasAuthority('ADMIN')"
+        >
+          <button type="submit" class="btn btn-primary"
+                  style="height:39px; margin-top: 32px;"><i class="fa-solid fa-trash-can"></i>
+          </button>
+        </form>
+      </td>
     </tr>
     </tbody>
   </table>

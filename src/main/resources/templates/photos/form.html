@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="isEdit=${photo.id != null}">
+<head th:insert="fragments/resources :: headResources(${isEdit ? 'Edit Photo' : 'Create Photo'})"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar('photos')"></nav>
+<div class="container">
+  <h1 th:text="${isEdit ? 'Edit Photo' : 'Create Photo'}"></h1>
+  <hr>
+  <!-- form di creazione di una foto -->
+  <form
+      th:with="actionUrl=${isEdit ? '/photos/edit/'+photo.id : '/photos/create'}"
+      id="pizza-create"
+      method="POST"
+      th:action="@{${actionUrl}}"
+      th:object="${photo}"
+      class="row gy-2"
+      enctype="multipart/form-data"
+  >
+    <div class="col-8">
+      <!-- photo details -->
+      <div class="row">
+        <!-- title -->
+        <div class="col-6"
+             th:insert="fragments/components :: formField('text', 'Title', 'title')"></div>
+        <!--url-->
+        <div class="col-6"
+             th:insert="fragments/components :: formField('text', 'Url', 'url')"></div>
+        <!-- description-->
+        <div class="col-6"
+             th:insert="fragments/components :: formField('text', 'Description', 'description')"></div>
+        <!-- visiblity -->
+        <div class="col-6">
+          <span>Visibility</span>
+          <br>
+          <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+            <input th:field="*{visibility}"
+                   th:for="${visibility}"
+                   type="radio"
+                   class="btn-check"
+                   name="btnradio"
+                   id="btn1"
+                   value="true"
+                   autocomplete="off"
+                   checked>
+            <label class="btn btn-outline-primary" for="btn1">Visible</label>
+            <input th:field="*{visibility}"
+                   th:for="${visibility}"
+                   type="radio"
+                   class="btn-check"
+                   name="btnradio"
+                   id="btn2"
+                   value="false"
+                   autocomplete="off"
+                   checked>
+            <label class="btn btn-outline-primary" for="btn2">Not Visible</label>
+          </div>
+        </div>
+      </div>
+      <!-- actions -->
+      <div class="col-12">
+        <button class="btn btn-primary" type="submit">Save</button>
+        <a th:href="@{/photos}" class="btn btn-primary">Cancel</a>
+      </div>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
