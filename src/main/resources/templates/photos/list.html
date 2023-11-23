@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Photo List')"></head>
+<body>
+
+<nav th:replace="fragments/navbar :: topNavbar('photos')"></nav>
+<div class="container">
+  <h1>Photo Album</h1>
+  <form th:action="@{/photos}" method="GET">
+    <div class="input-group">
+      <!-- input precaricato leggendo il paramentro search della request -->
+      <input
+          type="text"
+          placeholder="Search by title"
+          class="form-control" name="search"
+          th:value="${param.sarch}"
+      >
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </form>
+</div>
+
+<hr>
+
+<div class="container">
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Url</th>
+      <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="photo : ${photoList}" th:object="${photo}" class="">
+      <td class="pt-5" th:text="*{title}"></td>
+      <td><img style="height: 100px; width: 150px;" th:src="*{url}"></td>
+      <td class="pt-5" th:text="*{description}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
