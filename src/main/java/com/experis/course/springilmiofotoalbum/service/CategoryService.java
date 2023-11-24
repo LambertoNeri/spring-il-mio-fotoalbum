@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -23,5 +24,18 @@ public class CategoryService {
     }
     category.setName(category.getName().toLowerCase());
     return categoryRepository.save(category);
+  }
+
+  public Category getCategoryById(Integer id) throws CategoryNameUniqueException {
+    Optional<Category> result = categoryRepository.findById(id);
+    if (result.isPresent()) {
+      return result.get();
+    } else {
+      throw new CategoryNameUniqueException("Category with id " + id + " not found");
+    }
+  }
+
+  public void deleteCategory(Integer id) {
+    categoryRepository.deleteById(id);
   }
 }

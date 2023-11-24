@@ -25,9 +25,17 @@
     <ul class="list-group">
       <li
           th:each="category : ${categoryList}"
-          th:text="${category.name}"
           class="list-group-item"
-      ></li>
+      >
+        <span th:text="${category.name}"></span>
+        <form
+            th:action="@{/categories/delete/{id}(id=${category.id})}"
+            onsubmit="return confirm('Are you sure?')"
+            method="POST"
+        >
+          <button type="submit" class="btn btn-primary"><i class="fa-solid fa-trash-can"></i></button>
+        </form>
+      </li>
     </ul>
   </section>
 </div>
