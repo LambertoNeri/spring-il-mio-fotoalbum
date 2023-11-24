@@ -4,6 +4,8 @@ import com.experis.course.springilmiofotoalbum.exceptions.PhotoNotFoundException
 import com.experis.course.springilmiofotoalbum.model.Photo;
 import com.experis.course.springilmiofotoalbum.repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,6 +65,12 @@ public class PhotoService {
   // METODO CHE ELIMINA UNA FOTO DAL DATABASE
   public void deletePhoto(Integer id) {
     photoRepository.deleteById(id);
+  }
+
+  // METODO CHE PRENDE IN INGRESSO UN Pageable e restituisce la Page di libri
+
+  public Page<Photo> getPage(Pageable pageable) {
+    return photoRepository.findAll(pageable);
   }
 
 }
