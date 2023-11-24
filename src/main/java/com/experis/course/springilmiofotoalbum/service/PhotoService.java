@@ -60,4 +60,9 @@ public class PhotoService {
     return photoRepository.save(photoToEdit);
   }
 
+  // METODO CHE ELIMINA UNA FOTO DAL DATABASE
+  public void deletePhoto(Integer id) {
+    photoRepository.deleteById(id);
+  }
+
 }

@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -48,6 +49,7 @@ public class PhotoController {
   @GetMapping("/create")
   public String create(Model model) {
     model.addAttribute("photo", new Photo());
+    model.addAttribute("categoryList", categoryService.getAll());
     return "photos/form";
   }
 
@@ -68,6 +70,7 @@ public class PhotoController {
   public String edit(@PathVariable Integer id, Model model) {
     try {
       model.addAttribute("photo", photoService.getPhotoById(id));
+      model.addAttribute("categoryList", categoryService.getAll());
       return "photos/form";
     } catch (PhotoNotFoundException e) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -83,5 +86,20 @@ public class PhotoController {
     }
     Photo savedPhoto = photoService.editPhoto(formPhoto);
     return "redirect:/photos/show/" + savedPhoto.getId();
+  }
+
+  // metodo per eliminare una foto da database
+
+  @PostMapping("/delete/{id}")
+  public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+    try {
+      Photo photoToDelete = photoService.getPhotoById(id);
+      photoService.deletePhoto(id);
+      redirectAttributes.addFlashAttribute("message",
+          "Photo " + photoToDelete.getTitle() + " deleted!");
+      return "redirect:/photos";
+    } catch (PhotoNotFoundException e) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+    }
   }
 }

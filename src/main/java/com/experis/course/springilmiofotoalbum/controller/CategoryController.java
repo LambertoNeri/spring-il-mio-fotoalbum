@@ -40,8 +40,9 @@ public class CategoryController {
       categoryService.save(formCategory);
       return "redirect:/categories";
     } catch (CategoryNameUniqueException e) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-          "A category with name " + e.getMessage() + " already exists");
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A category with name " + e.getMessage() + " already exists");
+//      model.addAttribute("categoryList", categoryService.getAll());
+//      return "categories/index";
     }
   }
 }

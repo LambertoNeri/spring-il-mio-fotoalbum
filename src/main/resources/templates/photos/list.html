@@ -58,6 +58,7 @@
             th:action="@{/photos/delete/{id}(id=*{id})}"
             onsubmit="return confirm('Are you sure?')"
             sec:authorize="hasAuthority('ADMIN')"
+            method="POST"
         >
           <button type="submit" class="btn btn-primary"
                   style="height:39px; margin-top: 32px;"><i class="fa-solid fa-trash-can"></i>
