@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table
+@Table(name = "messages")
 public class Message {
 
   @Id
@@ -19,6 +19,7 @@ public class Message {
 
   @Lob
   @NotBlank(message = "Message must not be blank")
+  @Column(length = 600)
   private String message;
 
   @NotBlank

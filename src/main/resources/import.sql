@@ -30,3 +30,7 @@ INSERT INTO users (email, first_name, last_name, registered_at, password)VALUES(
 INSERT INTO users_roles (user_id, roles_id) VALUES(1, 2);
 INSERT INTO users_roles (user_id, roles_id) VALUES(1, 3);
 INSERT INTO users_roles (user_id, roles_id) VALUES(2, 3);
+
+-- inserisco i messaggi
+INSERT INTO messages (email, message, title) VALUES("lamberto@email.com", "sono bello", "primo messaggio")
+INSERT INTO messages (email, message, title) VALUES("pimpa@email.com", "sono bella", "secondo messaggio")

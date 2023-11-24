@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Message List')"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar('messages')"></nav>
+<div class="container">
+  <h1>Messages</h1>
+  <hr>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Email</th>
+      <th>Message</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="message : ${messageList}" th:object="${message}" class="">
+      <td class="" th:text="*{title}"></td>
+      <td class="" th:text="*{email}"></td>
+      <td class="" th:text="*{message}"></td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</body>
+</html>

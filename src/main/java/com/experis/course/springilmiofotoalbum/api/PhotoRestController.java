@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/photos")
+@RequestMapping("/api/photos")
 @CrossOrigin
 public class PhotoRestController {
 
