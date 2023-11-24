@@ -73,4 +73,15 @@ public class PhotoController {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
     }
   }
+
+  @PostMapping("/edit/{id}")
+  public String doEdit(@PathVariable Integer id, @Valid @ModelAttribute("photo") Photo formPhoto,
+                       BindingResult bindingResult, Model model) {
+    if (bindingResult.hasErrors()) {
+      model.addAttribute("categoryList", categoryService.getAll());
+      return "/photos/form";
+    }
+    Photo savedPhoto = photoService.editPhoto(formPhoto);
+    return "redirect:/photos/show/" + savedPhoto.getId();
+  }
 }

@@ -47,4 +47,17 @@ public class PhotoService {
       throw new PhotoNotFoundException("Photo with id " + id + " not found");
     }
   }
+
+  // METODO PER MODIFICARE UNA FOTO CON UN ID
+  public Photo editPhoto(Photo photo) throws PhotoNotFoundException {
+    Photo photoToEdit = getPhotoById(photo.getId());
+    photoToEdit.setTitle(photo.getTitle());
+    photoToEdit.setUrl(photo.getUrl());
+    photoToEdit.setDescription(photo.getDescription());
+    photoToEdit.setCategories(photo.getCategories());
+    photoToEdit.setVisibility(photo.getVisibility());
+
+    return photoRepository.save(photoToEdit);
+  }
+
 }
