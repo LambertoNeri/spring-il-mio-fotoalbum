@@ -9,3 +9,12 @@
     -webkit-line-clamp: 3; 
     -webkit-box-orient: vertical;
 }
+
+form{
+    width: 800px !important;
+    margin-inline: auto;
+}
+
+.picture-card{
+    width: 300px;
+}

@@ -1,6 +1,7 @@
 /* COSTANTI */
 
-const apiUrlTotal =  'http://localhost:8080/api/photos';
+const apiPhotos =  'http://localhost:8080/api/photos';
+const apiMessages = 'http://localhost:8080/api/messages';
 
 let search = 0;
 
@@ -40,9 +41,9 @@ const renderPhoto = (element) => {
 const renderPhotoList = (data) => {
     let content;
     if(data.length >0 ) {
-        content = '<div class="d-flex flex-wrap">';
+        content = '<div class="d-flex flex-wrap justify-content-around">';
         data.forEach((element) => {
-            content += '<div class="col-3 d-flex">';
+            content += '<div class="picture-card d-flex">';
             content += renderPhoto(element);
             content += '</div>';
         });
@@ -66,7 +67,7 @@ const getPhotos = async (search) => {
         }
     } else {
         try {
-            const response = await axios.get(apiUrlTotal);
+            const response = await axios.get(apiPhotos);
             renderPhotoList(response.data)
         }catch(error){
             console.log(error);
@@ -74,6 +75,25 @@ const getPhotos = async (search) => {
     }
 };
 
+
+// funzione per creare un nuovo messaggio
+
+document.getElementById('messageForm').addEventListener('submit', async function(event){
+    event.preventDefault();
+    const title = document.getElementById("title").value;
+    const message = document.getElementById("message").value;
+    const email = document.getElementById("email").value;
+    try{
+        await axios.post(apiMessages, {
+            title,
+            message,
+            email,
+        })
+        window.location.href = "index.html";
+    }catch(error){
+        console.error(error);
+    }
+})
 
 
 

@@ -11,11 +11,11 @@ INSERT INTO categories(name) VALUE('tramonto')
 INSERT INTO categories(name) VALUE('città')
 
 -- assegno alle foto delle categorie
-INSERT INTO photos_categories (photo_id, categories_id) VALUES (1, 1)
-INSERT INTO photos_categories (photo_id, categories_id) VALUES (1, 3)
-INSERT INTO photos_categories (photo_id, categories_id) VALUES (2, 1)
-INSERT INTO photos_categories (photo_id, categories_id) VALUES (3, 4)
-INSERT INTO photos_categories (photo_id, categories_id) VALUES (4, 1)
+INSERT INTO photos_categories (photos_id, categories_id) VALUES (1, 1)
+INSERT INTO photos_categories (photos_id, categories_id) VALUES (1, 3)
+INSERT INTO photos_categories (photos_id, categories_id) VALUES (2, 1)
+INSERT INTO photos_categories (photos_id, categories_id) VALUES (3, 4)
+INSERT INTO photos_categories (photos_id, categories_id) VALUES (4, 1)
 
 -- inserisco i ruoli
 INSERT INTO roles (id, name) VALUES(1, 'SUPERADMIN')

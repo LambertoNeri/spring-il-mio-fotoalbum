@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,25 +36,34 @@ public class PhotoService {
   // METODO CHE RESTITUISCE UNA LISTA DI TUTTE LE FOTO VISIBILI EVENTUALMENTE FILTRATE
   public List<Photo> getVisiblePhotoList(Optional<String> search) {
     if (search.isPresent()) {
-      List<Photo> photoListUnfiltered = photoRepository.findByTitleContainingIgnoreCase(search.get());
-      List<Photo> photoList = new ArrayList<>();
-      for (Photo photo : photoListUnfiltered) {
-        if (photo.getVisibility() == true) {
-          photoList.add(photo);
-        }
-      }
-      return photoList;
+      return photoRepository.findByVisibilityTrueAndTitleContainingIgnoreCase(
+          search.get());
     } else {
-      List<Photo> photoListUnfiltered = photoRepository.findAll();
-      List<Photo> photoList = new ArrayList<>();
-      for (Photo photo : photoListUnfiltered) {
-        if (photo.getVisibility() == true) {
-          photoList.add(photo);
-        }
-      }
-      return photoList;
+      return photoRepository.findByVisibilityTrue();
     }
   }
+//  public List<Photo> getVisiblePhotoList(Optional<String> search) {
+//    if (search.isPresent()) {
+//      List<Photo> photoListUnfiltered = photoRepository.findByTitleContainingIgnoreCase(search.get());
+//      List<Photo> photoList = new ArrayList<>();
+//      for (Photo photo : photoListUnfiltered) {
+//        if (photo.getVisibility() == true) {
+//          photoList.add(photo);
+//        }
+//      }
+//      return photoList;
+//    } else {
+//      List<Photo> photoListUnfiltered = photoRepository.findAll();
+//      List<Photo> photoList = new ArrayList<>();
+//      for (Photo photo : photoListUnfiltered) {
+//        if (photo.getVisibility() == true) {
+//          photoList.add(photo);
+//        }
+//      }
+//      return photoList;
+//    }
+//  }
+
 
   // METODO PER CREARE UNA NUOVA FOTO
 

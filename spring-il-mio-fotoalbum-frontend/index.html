@@ -11,7 +11,7 @@
 <body>
     <div class="container mt-3">
 
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-around">
             <h1 class="ms-5">Il mio album fotografico</h1>
             <button type="button" class="btn btn-warning my-3" onclick="location.href='create.html'">Create new</button>
             <div class="searchbar input-group input-group-sm mb-3 me-4">
@@ -24,6 +24,23 @@
             <div id="root"></div>
         </div>
     </div>
+
+    
+    <form class="mt-5 border border-primary py-4 px-4 d-flex flex-column justify-content-center" method="post" id="messageForm">
+        <h4 class="pb-2" style="margin-inline: auto;" >Leave a message here</h4>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" class="form-control" id="title">
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Message</label>
+            <input type="text" class="form-control" id="message">
+        <button type="submit" class="btn btn-primary mt-4" style="width: 100px; margin-inline: auto;">Submit</button>
+    </form>
       
     
  
