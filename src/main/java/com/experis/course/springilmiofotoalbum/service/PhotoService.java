@@ -1,8 +1,11 @@
 package com.experis.course.springilmiofotoalbum.service;
 
 import com.experis.course.springilmiofotoalbum.exceptions.PhotoNotFoundException;
+import com.experis.course.springilmiofotoalbum.exceptions.UserNotFoundException;
 import com.experis.course.springilmiofotoalbum.model.Photo;
+import com.experis.course.springilmiofotoalbum.model.User;
 import com.experis.course.springilmiofotoalbum.repository.PhotoRepository;
+import com.experis.course.springilmiofotoalbum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,14 +20,23 @@ public class PhotoService {
   @Autowired
   private PhotoRepository photoRepository;
 
-  // METODO CHE RESTITUISCE LA LISTA DI TUTTE LE FOTO EVENTUALMENTE FILTRATE
+  @Autowired
+  private UserRepository userRepository;
 
-  public List<Photo> getPhotoList(Optional<String> search) {
-    if (search.isPresent()) {
-      return photoRepository.findByTitleContainingIgnoreCase(
-          search.get());
+  // METODO CHE RESTITUISCE LA LISTA DI TUTTE LE FOTO EVENTUALMENTE FILTRATE PER NOME ED ID
+
+  public List<Photo> getPhotoList(Optional<String> search, Integer userId) {
+    if ((userId.equals(2) || userId.equals(3)) && search.isPresent()) {
+      return photoRepository.findByUserIdAndTitleContainingIgnoreCase(userId, search.get());
+    } else if (userId.equals(2) || userId.equals(3)) {
+      return photoRepository.findByUserId(userId);
     } else {
-      return photoRepository.findAll();
+      if (search.isPresent()) {
+        return photoRepository.findByTitleContainingIgnoreCase(
+            search.get());
+      } else {
+        return photoRepository.findAll();
+      }
     }
   }
 
@@ -66,10 +78,14 @@ public class PhotoService {
 
 
   // METODO PER CREARE UNA NUOVA FOTO
-
-  public Photo createPhoto(Photo photo) {
+  public Photo createPhoto(Photo photo, Integer userId) throws UserNotFoundException {
     photo.setId(null);
-    return photoRepository.save(photo);
+    Optional<User> user = userRepository.findById(userId);
+    if (user.isPresent()) {
+      photo.setUser(user.get());
+      return photoRepository.save(photo);
+    }
+    throw new UserNotFoundException("User id " + userId + " not found");
   }
 
   // METODO CHE RESTITUISCE UNA FOTO PRESA PER ID, SE NON LA TROVA SOLLEVA UN'ECCEZIONE

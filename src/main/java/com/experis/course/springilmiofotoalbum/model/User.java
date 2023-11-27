@@ -1,11 +1,14 @@
 package com.experis.course.springilmiofotoalbum.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +33,10 @@ public class User {
 
   @ManyToMany(fetch = FetchType.EAGER)
   private Set<Role> roles = new HashSet<>();
+
+  @OneToMany(mappedBy = "user", orphanRemoval = true, fetch = FetchType.LAZY)
+  @JsonIgnore
+  private List<Photo> photos = new ArrayList<>();
 
   public Integer getId() {
     return id;
@@ -85,5 +92,13 @@ public class User {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public List<Photo> getPhotos() {
+    return photos;
+  }
+
+  public void setPhotos(List<Photo> photos) {
+    this.photos = photos;
   }
 }

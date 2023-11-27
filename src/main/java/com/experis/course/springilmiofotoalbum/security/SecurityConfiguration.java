@@ -36,7 +36,7 @@ public class SecurityConfiguration {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http
         .authorizeHttpRequests()
-        .requestMatchers("/photos", "photos/**").hasAnyAuthority("ADMIN")
+        .requestMatchers("/photos", "photos/**").hasAnyAuthority("SUPERADMIN", "ADMIN")
         .requestMatchers("/**").permitAll()
         .and().formLogin().and().logout();
     http.csrf().disable();

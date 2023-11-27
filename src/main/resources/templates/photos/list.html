@@ -8,7 +8,7 @@
      style="width: 800px; margin-inline: auto;">
   <h1>Photo Album</h1>
   <div class="d-flex justify-content-between" style="width: 800px">
-    <div class="my-3" sec:authorize="hasAuthority('ADMIN')">
+    <div class="my-3" sec:authorize="hasAnyAuthority('SUPERADMIN', 'ADMIN')">
       <a th:href="@{/photos/create}" class="btn btn-primary">Add new photo</a>
     </div>
     <form th:action="@{/photos}" method="GET" class="d-flex align-items-center">
@@ -51,13 +51,13 @@
             style="height:39px; margin-top: 32px;"
             th:href="@{/photos/edit/{id}(id=*{id})}"
             title="edit"
-            sec:authorize="hasAuthority('ADMIN')"
+            sec:authorize="hasAnyAuthority('SUPERADMIN', 'ADMIN')"
         ><i
             class="fa-solid fa-pen-to-square"></i></a>
         <form
             th:action="@{/photos/delete/{id}(id=*{id})}"
             onsubmit="return confirm('Are you sure?')"
-            sec:authorize="hasAuthority('ADMIN')"
+            sec:authorize="hasAnyAuthority('SUPERADMIN', 'ADMIN')"
             method="POST"
         >
           <button type="submit" class="btn btn-primary"

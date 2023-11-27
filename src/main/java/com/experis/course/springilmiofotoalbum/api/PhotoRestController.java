@@ -42,8 +42,8 @@ public class PhotoRestController {
 
   // endpoint per creare una nuova foto
   @PostMapping
-  public Photo create(@Valid @RequestBody Photo photo) {
-    return photoService.createPhoto(photo);
+  public Photo create(@Valid @RequestBody Photo photo, Integer id) {
+    return photoService.createPhoto(photo, id);
   }
 
   // endpoint per modificare una foto
