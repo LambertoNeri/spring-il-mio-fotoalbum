@@ -1,7 +1,6 @@
 package com.experis.course.springilmiofotoalbum.controller;
 
 import com.experis.course.springilmiofotoalbum.exceptions.PhotoNotFoundException;
-import com.experis.course.springilmiofotoalbum.exceptions.UserIdNotValidException;
 import com.experis.course.springilmiofotoalbum.exceptions.UserNotFoundException;
 import com.experis.course.springilmiofotoalbum.model.Photo;
 import com.experis.course.springilmiofotoalbum.repository.UserRepository;
@@ -93,7 +92,7 @@ public class PhotoController {
     DatabaseUserDetails userDetails = (DatabaseUserDetails) authentication.getPrincipal();
     Integer photoID = photoService.getPhotoById(id).getUser().getId();
     Integer userId = userDetails.getId();
-    if (userId.equals(photoID) || userDetails.getAuthorities().getClass().getName().equals("SUPERADMIN")) {
+    if (userDetails.isSuperAdmin() || userId.equals(photoID)) {
       try {
         model.addAttribute("photo", photoService.getPhotoById(id));
         model.addAttribute("categoryList", categoryService.getAll());
@@ -102,7 +101,7 @@ public class PhotoController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
       }
     }
-    throw new UserIdNotValidException("Canno't edit other's users photos");
+    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Canno't edit other's users photos");
   }
 
   @PostMapping("/edit/{id}")
@@ -111,7 +110,7 @@ public class PhotoController {
     DatabaseUserDetails userDetails = (DatabaseUserDetails) authentication.getPrincipal();
     Integer photoID = photoService.getPhotoById(id).getUser().getId();
     Integer userId = userDetails.getId();
-    if (userId.equals(photoID) || userDetails.getAuthorities().getClass().getName().equals("SUPERADMIN")) {
+    if (userDetails.isSuperAdmin() || userId.equals(photoID)) {
       if (bindingResult.hasErrors()) {
         model.addAttribute("categoryList", categoryService.getAll());
         return "/photos/form";
@@ -119,7 +118,7 @@ public class PhotoController {
       Photo savedPhoto = photoService.editPhoto(formPhoto);
       return "redirect:/photos/show/" + savedPhoto.getId();
     }
-    throw new UserIdNotValidException("Canno't edit other's users photos");
+    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Canno't edit other's users photos");
   }
 
   // metodo per eliminare una foto da database
@@ -129,7 +128,7 @@ public class PhotoController {
     DatabaseUserDetails userDetails = (DatabaseUserDetails) authentication.getPrincipal();
     Integer photoID = photoService.getPhotoById(id).getUser().getId();
     Integer userId = userDetails.getId();
-    if (userId.equals(photoID) || userDetails.getAuthorities().getClass().getName().equals("SUPERADMIN")) {
+    if (userDetails.isSuperAdmin() || userId.equals(photoID)) {
       try {
         Photo photoToDelete = photoService.getPhotoById(id);
         photoService.deletePhoto(id);
@@ -140,6 +139,6 @@ public class PhotoController {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
       }
     }
-    throw new UserIdNotValidException("Canno't delete other's users photos");
+    throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Canno't edit other's users photos");
   }
 }

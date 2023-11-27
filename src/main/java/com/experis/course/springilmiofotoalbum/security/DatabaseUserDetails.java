@@ -26,6 +26,16 @@ public class DatabaseUserDetails implements UserDetails {
     }
   }
 
+  public boolean isSuperAdmin() {
+
+    for (GrantedAuthority a : authorities) {
+      if (a.getAuthority().equals("SUPERADMIN")) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return this.authorities;
